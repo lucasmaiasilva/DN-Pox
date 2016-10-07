@@ -17,26 +17,27 @@ class lucas(EventMixin):
       msg = of.ofp_flow_mod()
       #msg.match = of.ofp_match()
       #msg.match.dl_type = pkt.ethernet.IP_TYPE
-      msg.match.dn_dst = "www.uol.com.br"
+      #msg.match.dn_dst = "www.uol.com.br"
+      msg.match.dn_dst="www.dcc.ufmg.br"
       #msg.match.dn_src = "www.uol.com"
       #msg.match.in_port=1
-      msg.match.dl_type=0x0800
+      #msg.match.dl_type=0x0800
       msg.idle_timeout = 65535
       msg.priority = 65535
-      #msg.actions.append(of.ofp_action_output(port = 3))
-      msg.actions.append(of.ofp_action_nw_addr.set_dst(IPAddr("150.164.0.135")))
+      #msg.actions.append(of.ofp_action_output(port = ))
+      #msg.actions.append(of.ofp_action_nw_addr.set_dst(IPAddr("150.164.0.135")))
       event.connection.send(msg)
       print "regra inserida", msg
 
-      msg = of.ofp_flow_mod()
-      msg.match.dn_src="www.uol.com.br"
-      msg.match.dl_type=0x0800
+      #msg = of.ofp_flow_mod()
+      #msg.match.dn_src="www.uol.com.br"
+      #msg.match.dl_type=0x0800
       #msg.match.in_port=3
-      msg.idle_timeout = 65535
-      msg.priority = 65535
-      msg.actions.append(of.ofp_action_nw_addr.set_src(IPAddr("150.164.0.135")))
+      #msg.idle_timeout = 65535
+      #msg.priority = 65535
+      #msg.actions.append(of.ofp_action_nw_addr.set_src(IPAddr("150.164.0.135")))
       #msg.actions.append(of.ofp_action_output(port = 1))
-      event.connection.send(msg)
+      #event.connection.send(msg)
 
 
 

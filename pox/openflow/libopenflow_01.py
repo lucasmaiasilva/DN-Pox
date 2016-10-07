@@ -2325,7 +2325,7 @@ class ofp_flow_mod (ofp_header):
     """
     po = None
     buffer_id = self.buffer_id
-    print("self.data",self.data)
+    #print("self.data",self.data)
     if self.data:
       if not self.data.is_complete:
         _log(warn="flow_mod is trying to include incomplete data")
@@ -2362,7 +2362,7 @@ class ofp_flow_mod (ofp_header):
     #packed = b"010e0088b6b55dc1003fffff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007777772e756f6c2e636f6d2e627200616374696f6e733d004c435f5041500000000000000000000000000000003c00008000ffffffff00000001".decode('hex')
 
 
-    print("flow_mod",packed.encode('hex'), len(packed), sys.getsizeof(packed))
+    #print("flow_mod",packed.encode('hex'), len(packed), sys.getsizeof(packed))
 
     return packed
 
