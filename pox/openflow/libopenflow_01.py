@@ -31,6 +31,7 @@ from pox.lib.packet.udp import udp
 from pox.lib.packet.tcp import tcp
 from pox.lib.packet.icmp import icmp
 from pox.lib.packet.arp import arp
+from pox.lib.packet.dns import dns
 
 from pox.lib.addresses import *
 from pox.lib.util import assert_type
@@ -918,7 +919,7 @@ class ofp_queue_prop_min_rate (ofp_base):
     outstr += prefix + 'rate: ' + str(self.rate) + '\n'
     return outstr
 
-
+tabela={}
 ##2.3 Flow Match Structures
 class ofp_match (ofp_base):
   adjust_wildcards = True # Set to true to "fix" outgoing wildcards
@@ -981,6 +982,15 @@ class ofp_match (ofp_base):
       if isinstance(p, udp) or isinstance(p, tcp):
         match.tp_src = p.srcport
         match.tp_dst = p.dstport
+        if(p.srcport==53):
+            for i in (p.payload.answers):
+              if(i.qtype==1):
+                tabela[i.rddata]=p.payload.questions[0].name
+                #print(p.payload.questions[0].name , i.qtype , i.rddata)
+        print (tabela)
+
+
+
       elif isinstance(p, icmp):
         match.tp_src = p.type
         match.tp_dst = p.code
@@ -990,6 +1000,11 @@ class ofp_match (ofp_base):
         match.nw_src = p.protosrc
         match.nw_dst = p.protodst
 
+    if(tabela.has_key(match.nw_dst)):
+      match.dn_dst=tabela[match.nw_dst]
+    if(tabela.has_key(match.nw_src)):
+      match.dn_src=tabela[match.nw_src]
+      
     return match
 
   def clone (self):
